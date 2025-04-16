@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart';
 import 'src/adrenal_wash.dart';
 import 'src/widgets/input_section.dart';
 import 'src/widgets/results_section.dart';
 
+// For controlling window size on desktop platforms
+import 'package:window_size/window_size.dart';
+
 void main() {
+  // This is important to ensure bindings are initialized
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Set window size only for desktop platforms
+  if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+    setWindowTitle('Adrenal CT Washout Calculator');
+    setWindowMinSize(const Size(400, 630));
+    setWindowMaxSize(const Size(800, 800));
+    
+    // You can also set the initial window size
+    setWindowFrame(const Rect.fromLTWH(0, 0, 400, 630));
+  }
+  
   runApp(const AdrenalWashoutApp());
 }
 
